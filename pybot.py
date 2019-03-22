@@ -21,14 +21,14 @@ def main():
     @BOT.command()
     async def ping(ctx):
         """
-        Send latency when they say ping
+        Get the current latency of the bot
         """
         await ctx.send(f'{BOT.latency * 1000}ms')
 
     @BOT.command()
     async def halp(ctx, *message_parts):
         """
-        Get help from stackoverflow
+        Search for the given search term on StackOverflow
         """
         message = ' '.join(message_parts)
 
