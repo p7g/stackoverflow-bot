@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8c4cac21dd76163a4ed575ec21117a5a861400bae91d066ca9139f7f454ed32d"
+            "sha256": "0b8271d9f24741f2dd6dcfbfbc5b160e1c3f0a51cac06c203ca811d2c0e2da1f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -70,7 +70,7 @@
                 "voice"
             ],
             "git": "https://github.com/Rapptz/discord.py",
-            "ref": "5e65ec978cf278fefcc5586e2df732bc7a8bed4e"
+            "ref": "b41a29a8897c5936d022a741e923353c0a26e9e8"
         },
         "idna": {
             "hashes": [
@@ -193,6 +193,21 @@
                 "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"
             ],
             "version": "==0.6.1"
+        },
+        "mypy": {
+            "hashes": [
+                "sha256:308c274eb8482fbf16006f549137ddc0d69e5a589465e37b99c4564414363ca7",
+                "sha256:e80fd6af34614a0e898a57f14296d0dacb584648f0339c2e000ddbf0f4cc2f8d"
+            ],
+            "index": "pypi",
+            "version": "==0.670"
+        },
+        "mypy-extensions": {
+            "hashes": [
+                "sha256:37e0e956f41369209a3d5f34580150bcacfabaa57b33a15c0b25f4b5725e0812",
+                "sha256:b16cabe759f55e3409a7d231ebd2841378fb0c27a5d1994719e340e4f429ac3e"
+            ],
+            "version": "==0.4.1"
         },
         "pylint": {
             "hashes": [
