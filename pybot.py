@@ -4,35 +4,37 @@ Stackoverflow bot
 import html
 import logging
 import os
+from typing import Dict
 import aiohttp
 from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 
 def main():
+    """ Start the bot """
     load_dotenv()
     logging.basicConfig(level=logging.INFO)
 
-    BOT = commands.Bot(command_prefix=os.getenv('PREFIX', default='&'))
-    LOG = logging.getLogger('PYBOT')
-    SESSION = aiohttp.ClientSession()
-    SEARCH = 'https://api.stackexchange.com/2.2/search/advanced'
+    bot: commands.Bot = commands.Bot(command_prefix=os.getenv('PREFIX', default='&'))
+    log: logging.Logger = logging.getLogger('PYBOT')
+    session: aiohttp.ClientSession = aiohttp.ClientSession()
+    search: str = 'https://api.stackexchange.com/2.2/search/advanced'
 
-    @BOT.command()
+    @bot.command()
     async def ping(ctx):
         """
         Get the current latency of the bot
         """
-        await ctx.send(f'{BOT.latency * 1000}ms')
+        await ctx.send(f'{bot.latency * 1000}ms')
 
-    @BOT.command()
-    async def halp(ctx, *message_parts):
+    @bot.command()
+    async def halp(ctx, *message_parts: str):
         """
         Search for the given search term on StackOverflow
         """
-        message = ' '.join(message_parts)
+        message: str = ' '.join(message_parts)
 
-        LOG.info('Searching for "%s"', message)
+        log.info('Searching for "%s"', message)
         params = {
             'q': message,
             'sort': 'relevance',
@@ -42,15 +44,15 @@ def main():
             'answers': 1,
             'pagesize': 1,
         }
-        resp = await SESSION.get(SEARCH, params=params)
+        resp = await session.get(search, params=params)
         data = await resp.json()
 
         if not data['items']:
             message = 'No results for "%s"!' % message
-            LOG.info(message)
+            log.info(message)
             return await ctx.send(message)
 
-        item = data['items'][0]
+        item: Dict = data['items'][0]
 
         description = (
             html.unescape(item['body_markdown'])
@@ -63,21 +65,21 @@ def main():
             url=item['link'],
             description=(
                 (description[:2045]
-                + '...')
+                 + '...')
                 if len(description) > 2048
                 else description
             ),
         )
         await ctx.send(embed=embed)
 
-    @BOT.event
+    @bot.event
     async def on_ready():
         """
         Log to the console when connected
         """
-        LOG.info('Ready!!!!')
+        log.info('Ready!!!!')
 
-    BOT.run(os.getenv('TOKEN'))
+    bot.run(os.getenv('TOKEN'))
 
 if __name__ == '__main__':
     main()
